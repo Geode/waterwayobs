@@ -12,6 +12,8 @@ https://docs.google.com/presentation/d/1VDf68mxF4iVRDEiHW0p_7sShgWfzcuX8gMpPRQv8
 
 http://2013.foss4g.org/geohack/challenges/obstructions/
 
+2 repositories : https://github.com/Geode/waterwayobs & https://github.com/Geode/waterway-obstructions
+
 contacts :
 
 Nicolas Dufrane (nicolas.dufrane@opengeode.be) :  Mobile App Dev
