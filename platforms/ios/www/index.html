@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>WaterWayObstructions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css">
+        <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+        <link rel="stylesheet" href="css/style.mobile.css" type="text/css">
+        <link rel="stylesheet" href="css/style.mobile-jq.css" type="text/css">
+        <script src="js/OpenLayers.js"></script>
+        <script src="js/mobile-base.js"></script>
+        <script src="js/mobile-camera.js"></script>
+        <script src="js/mobile-geolocation.js"></script>
+        <script src="js/mobile-jq.js"></script>
+    	<script src="js/obstructions.js"></script>
+        <script type="text/javascript" src="phonegap.js"></script>
+    </head>
+    <body>
+        <h1 id="title">WaterWayObstructions</h1>
+        <div id="tags">
+          mobile, jquery, water
+        </div>
+        <p id="shortdesc">
+          WaterWayObstructions
+        </p>
+
+        <div data-role="page" id="mappage">
+        
+          <div data-role="content">
+            <div id="map"></div>
+          </div>
+
+          <div data-role="footer">
+          	<div data-role="controlgroup" data-type="horizontal">
+            <a href="#searchpage" data-icon="search" data-role="button" >Search</a>
+            <a href="#" id="locate" data-role="button">Locate</a>
+            <a href="#reportpage"  data-role="button">Report</a>
+            <a href="#layerspage"  data-role="button" data-mini="true">Maps</a>
+            </div>
+          </div>
+          <div id="navigation" data-role="controlgroup" data-type="vertical">
+            <a href="#" data-role="button" data-icon="plus" id="plus"
+               data-iconpos="notext"></a>
+            <a href="#" data-role="button" data-icon="minus" id="minus"
+               data-iconpos="notext"></a>
+          </div>
+        </div>
+
+        <div data-role="page" id="reportpage" style="padding: 10px">
+          <div data-role="header">
+            <h1>Report</h1>
+            <!--
+            <a href="#" data-role="button" data-mini="true" data-iconpos="left">Send</a>
+            <a href="#mappage" data-role="button" data-mini="true" data-iconpos="right">Cancel</a>
+            -->
+          </div>
+          <div data-role="content">
+			<form action="http://localhost:82/reporting/add" method="post" id="form" data-transition="flow" data-rel="dialog">
+			   <h3>Report Obstructions PROTO</h3>
+			   
+			   <div data-role="fieldcontain">
+			   		<label for="camera_btn">Take Picture</label>
+			   		<a href="#" data-role="button" data-inline="true" data-mini="true" id="camera_btn">Take Picture</a>
+			   		<input type="text" name="picture_data" id="basic" value="" data-mini="true" />
+			   </div>
+
+			   <div data-role="fieldcontain">
+			   		<label for="obslocation_btn">Get Location</label>
+			   		<a href="#" data-role="button" data-inline="true" data-mini="true" id="obslocation_btn">Get Location</a>
+			   		<input type="text" name="location_data" id="basic" value="" data-mini="true" />
+			   </div>
+			   
+			   <div data-role="fieldcontain">
+				  <label for="id_category" class="select">Category</label>
+				  <select name="category" id="id_category" required="required" data-native-menu="false" data-mini="true">
+				  <option value="UNKNOWN">Unknown</option>
+				  <option value="WATERFALL">Waterfall</option>
+				  <option value="WEIR">Weir</option>
+				  <option value="MILL">Mill</option>
+				  <option value="LOCK">Lock</option>
+				  <option value="DAM">Dam</option>
+				  <option value="BARRAGE">Barrage</option>
+				  </select>
+			   </div>
+			   
+			   <div data-role="fieldcontain">
+			   		<label for="id_obstype" class="select">Obstruction Type</label>
+			   		<select name="obstype" id="id_obstype" required="required" data-native-menu="false" data-mini="true">
+				    <option value="ARTIFICIAL">Artificial</option>
+				    <option value="NATURAL">Natural</option>
+				    <option value="UNKNOWN">Unknown</option>				  
+			   </div>
+
+			   <div data-role="fieldcontain">
+			   		<label for="id_pass_sal" class="select">Passability : Salmon</label>
+			   		<select name="pass_sal" id="id_pass_sal" required="required" data-native-menu="false" data-mini="true">
+				    <option value="NO_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
+				    <option value="COMPLETE_BARRIER">No barrier</option>				  
+			   </div>
+			   
+			   	<div data-role="fieldcontain">
+			   		<label for="id_pass_trout" class="select">Passability : Adult trout</label>
+			   		<select name="pass_trout" id="id_pass_trout" required="required" data-native-menu="false" data-mini="true">
+				    <option value="NO_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
+				    <option value="COMPLETE_BARRIER">No barrier</option>				  
+			   </div>
+
+			   	<div data-role="fieldcontain">
+			   		<label for="id_pass_gray" class="select">Passability : Grayling</label>
+			   		<select name="pass_gray" id="id_pass_gray" required="required" data-native-menu="false" data-mini="true">
+				    <option value="NO_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
+				    <option value="COMPLETE_BARRIER">No barrier</option>				  
+			   </div>
+			   
+			   <div data-role="fieldcontain">
+			   		<label for="id_pass_rlamp" class="select">Passability : River Lamprey</label>
+			   		<select name="pass_rlamp" id="id_pass_rlamp" required="required" data-native-menu="false" data-mini="true">
+				    <option value="NO_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
+				    <option value="COMPLETE_BARRIER">No barrier</option>				  
+			   </div>
+			   
+			   <div data-role="fieldcontain">
+			   		<label for="id_pass_slamp" class="select">Passability : Sea Lamprey</label>
+			   		<select name="pass_slamp" id="id_pass_slamp" required="required" data-native-menu="false" data-mini="true">
+				    <option value="NO_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
+				    <option value="COMPLETE_BARRIER">No barrier</option>				  
+			   </div>
+
+			   <div data-role="fieldcontain">
+			   		<label for="id_pass_eel" class="select">Passability : Juvenile eel</label>
+			   		<select name="pass_eel" id="id_pass_eel" required="required" data-native-menu="false" data-mini="true">
+				    <option value="NO_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
+				    <option value="COMPLETE_BARRIER">No barrier</option>				  
+			   </div>
+
+			   <div data-role="fieldcontain">
+			   		<label for="id_pass_cyp" class="select">Passability : Cyprinids and juvenile salmonids</label>
+			   		<select name="pass_cyp" id="id_pass_cyp" required="required" data-native-menu="false" data-mini="true">
+				    
+				    <option value="NO_BARRIER">No barrier</option>
+				    <option value="COMPLETE_BARRIER">Artificial</option>
+				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
+				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>			  
+			   </div>
+			   
+
+      				<button type="submit" data-mini="true"  data-theme="d">Send</button>
+      				<a href="#mappage" data-role="button" data-inline="true" data-mini="true" >back</a>
+			</form>          		
+          </div>
+          <div data-role="dialog">
+			Yeah
+   		  </div>
+
+        </div>
+        
+        <div data-role="page" id="searchpage">
+          <div data-role="header">
+            <h1>Search</h1>
+          </div>
+          <div data-role="fieldcontain">
+            <input type="search" name="query" id="query"
+                   value="" placeholder="Search for places"
+                   autocomplete="off"/>
+          </div>
+          <ul data-role="listview" data-inset="true" id="search_results"></ul> 
+          <div data-role="footer">
+          		<a href="#mappage" data-role="button">Back</a>
+          </div>          
+        </div>
+
+        <div data-role="page" id="layerspage">
+          <div data-role="header">
+            <h1>Layers</h1>
+          </div>
+          <div data-role="content">
+            <ul data-role="listview" data-inset="true" data-theme="d" data-dividertheme="c" id="layerslist">
+            </ul>
+          </div>
+        </div>
+
+        <div id="popup" data-role="dialog">
+            <div data-position="inline" data-theme="d" data-role="header">
+                <h1>Details</h1>
+            </div>
+            <div data-theme="c" data-role="content">
+                <ul id="details-list" data-role="listview">
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

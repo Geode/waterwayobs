@@ -1,0 +1,1 @@
+http://localhost:8080/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:obstruction&maxFeatures=2000&outputFormat=json&SRSNAME=EPSG%3A900913
