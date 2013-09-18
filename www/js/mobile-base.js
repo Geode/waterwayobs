@@ -49,6 +49,7 @@ var init = function (onSelectFeatureFunction) {
             url: 'http://localhost:8080/geoserver/cite/wms', 
         	title: 'Identify features by clicking',
             layers: [obstructionWms],
+            hover: true,
         	queryVisible: true
     }); 
     /*
@@ -143,12 +144,13 @@ var init = function (onSelectFeatureFunction) {
                 transitionEffect: 'resize'
             }),
             vector,
-            //obstructionsLayer
+            obstructionsLayer
         ],
         center: new OpenLayers.LonLat(-567207.4520074566,6501824.981972655),
         zoom: 8
     });
 	
+	clickinfo.activate();
     var style = {
         fillOpacity: 0.1,
         fillColor: '#000',

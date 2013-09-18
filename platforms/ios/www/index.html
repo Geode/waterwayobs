@@ -58,7 +58,7 @@
             -->
           </div>
           <div data-role="content">
-			<form action="http://localhost:82/reporting/add" method="post" id="form" data-transition="flow" data-rel="dialog">
+			<form action="http://localhost:82/reporting/add" method="post" id="form" data-transition="flow" data-rel="dialog" data-ajax="false">
 			   <h3>Report Obstructions PROTO</h3>
 			   
 			   <div data-role="fieldcontain">
@@ -70,12 +70,13 @@
 			   <div data-role="fieldcontain">
 			   		<label for="obslocation_btn">Get Location</label>
 			   		<a href="#" data-role="button" data-inline="true" data-mini="true" id="obslocation_btn">Get Location</a>
-			   		<input type="text" name="location_data" id="basic" value="" data-mini="true" />
+			   		<input type="text" name="x" id="geox" value="" data-mini="true" />
+			   		<input type="text" name="y" id="geoy" value="" data-mini="true" />
 			   </div>
 			   
 			   <div data-role="fieldcontain">
 				  <label for="id_category" class="select">Category</label>
-				  <select name="category" id="id_category" required="required" data-native-menu="false" data-mini="true">
+				  <select name="feature" id="id_category" required="required" data-native-menu="false" data-mini="true">
 				  <option value="UNKNOWN">Unknown</option>
 				  <option value="WATERFALL">Waterfall</option>
 				  <option value="WEIR">Weir</option>
@@ -88,7 +89,7 @@
 			   
 			   <div data-role="fieldcontain">
 			   		<label for="id_obstype" class="select">Obstruction Type</label>
-			   		<select name="obstype" id="id_obstype" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="type" id="id_obstype" required="required" data-native-menu="false" data-mini="true">
 				    <option value="ARTIFICIAL">Artificial</option>
 				    <option value="NATURAL">Natural</option>
 				    <option value="UNKNOWN">Unknown</option>				  
@@ -96,7 +97,7 @@
 
 			   <div data-role="fieldcontain">
 			   		<label for="id_pass_sal" class="select">Passability : Salmon</label>
-			   		<select name="pass_sal" id="id_pass_sal" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_sal" id="id_pass_sal" required="required" data-native-menu="false" data-mini="true">
 				    <option value="NO_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
@@ -105,7 +106,7 @@
 			   
 			   	<div data-role="fieldcontain">
 			   		<label for="id_pass_trout" class="select">Passability : Adult trout</label>
-			   		<select name="pass_trout" id="id_pass_trout" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_trout" id="id_pass_trout" required="required" data-native-menu="false" data-mini="true">
 				    <option value="NO_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
@@ -114,7 +115,7 @@
 
 			   	<div data-role="fieldcontain">
 			   		<label for="id_pass_gray" class="select">Passability : Grayling</label>
-			   		<select name="pass_gray" id="id_pass_gray" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_gray" id="id_pass_gray" required="required" data-native-menu="false" data-mini="true">
 				    <option value="NO_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
@@ -123,7 +124,7 @@
 			   
 			   <div data-role="fieldcontain">
 			   		<label for="id_pass_rlamp" class="select">Passability : River Lamprey</label>
-			   		<select name="pass_rlamp" id="id_pass_rlamp" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_rlamp" id="id_pass_rlamp" required="required" data-native-menu="false" data-mini="true">
 				    <option value="NO_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
@@ -132,7 +133,7 @@
 			   
 			   <div data-role="fieldcontain">
 			   		<label for="id_pass_slamp" class="select">Passability : Sea Lamprey</label>
-			   		<select name="pass_slamp" id="id_pass_slamp" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_slamp" id="id_pass_slamp" required="required" data-native-menu="false" data-mini="true">
 				    <option value="NO_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
@@ -141,7 +142,7 @@
 
 			   <div data-role="fieldcontain">
 			   		<label for="id_pass_eel" class="select">Passability : Juvenile eel</label>
-			   		<select name="pass_eel" id="id_pass_eel" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_eel" id="id_pass_eel" required="required" data-native-menu="false" data-mini="true">
 				    <option value="NO_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>
@@ -150,15 +151,25 @@
 
 			   <div data-role="fieldcontain">
 			   		<label for="id_pass_cyp" class="select">Passability : Cyprinids and juvenile salmonids</label>
-			   		<select name="pass_cyp" id="id_pass_cyp" required="required" data-native-menu="false" data-mini="true">
+			   		<select name="porosity_cyp" id="id_pass_cyp" required="required" data-native-menu="false" data-mini="true">
 				    
 				    <option value="NO_BARRIER">No barrier</option>
 				    <option value="COMPLETE_BARRIER">Artificial</option>
 				    <option value="PARTIAL_BARRIER_LOW_IMPACT">Partial barrier (low impact)</option>
 				    <option value="PARTIAL_BARRIER_HIGH_IMPACT">Partial barrier high impact)</option>			  
 			   </div>
-			   
-
+		
+ <div data-role="fieldcontain">
+      <label for="id_fishpass">FishPass</label>
+      <select name="fishpass" id="id_fishpass" data-role="slider" data-mini="true">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+      </select>
+   </div>
+			
+					<input type="hidden" name="submit-json" value="yes">yes</input>
+					<input type="hidden" name="id"></input>
+					
       				<button type="submit" data-mini="true"  data-theme="d">Send</button>
       				<a href="#mappage" data-role="button" data-inline="true" data-mini="true" >back</a>
 			</form>          		

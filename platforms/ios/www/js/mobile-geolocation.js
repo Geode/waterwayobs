@@ -14,6 +14,8 @@ $("#obslocation_btn").live('click', function(){
 			  'Heading: '           + position.coords.heading           + '\n' +
 			  'Speed: '             + position.coords.speed             + '\n' +
 			  'Timestamp: '         + position.timestamp                + '\n');
+		 $("geox").text(position.coords.longitude);
+		 $("geoy").text(position.coords.latitude);
 	};
 
 	// onError Callback receives a PositionError object

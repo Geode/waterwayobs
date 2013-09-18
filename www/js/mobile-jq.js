@@ -1,3 +1,4 @@
+$.support.cors = true;
 // Start with the map page
 window.location.replace(window.location.href.split("#")[0] + "#mappage");
 
@@ -27,6 +28,22 @@ function fixContentHeight() {
     }
 }
 
+$('form').live('submit', function (e) {
+    var $this = $(this);
+
+    //prevent the form from submitting normally
+    e.preventDefault();
+
+    //show the default loading message while the $.post request is sent
+    $.mobile.showPageLoadingMsg();
+	
+    //send $.post request to server, `$this.serialize()` adds the form data to the request
+    $.post($this.attr('action'), $this.serialize(), function (response) {
+		alert('done');
+        //you can now access the response from the server via the `response` variable
+        $.mobile.hidePageLoadingMsg();
+    }, 'json');//you can set the response data-type as well
+});
 // one-time initialisation of button handlers 
 
 $("#plus").live('click', function(){
