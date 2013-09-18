@@ -12,3 +12,10 @@ https://docs.google.com/presentation/d/1VDf68mxF4iVRDEiHW0p_7sShgWfzcuX8gMpPRQv8
 
 http://2013.foss4g.org/geohack/challenges/obstructions/
 
+contacts :
+
+Nicolas Dufrane (nicolas.dufrane@opengeode.be) :  Mobile App Dev
+Julien Collaer (julien.collaer@opengeode.be) : Application Layer
+Rait Laast-Laas (everlaast@gmail.com; skype: crashtestuser) : Database Layer
+Mandy (mandy.beasley@environment-agency.gov.uk)
+Jim Gregory (jim.gregory@environment-agency.gov.uk)
