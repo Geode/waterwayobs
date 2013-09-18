@@ -32,6 +32,7 @@ var init = function (onSelectFeatureFunction) {
  	var obstructionWms = new OpenLayers.Layer.WMS(
                     "cite:obstruction - Tiled", "http://localhost:8080/geoserver/cite/wms",
                     {
+                        //LAYERS: 'cite:confirmed_report_data',
                         LAYERS: 'cite:confirmed_report_data',
                         STYLES: '',
                         tiled: true,
@@ -49,8 +50,28 @@ var init = function (onSelectFeatureFunction) {
         	title: 'Identify features by clicking',
             layers: [obstructionWms],
         	queryVisible: true
-    });  
-        
+    }); 
+    /*
+        info = new OpenLayers.Control.WMSGetFeatureInfo({
+            url: 'http://demo.opengeo.org/geoserver/wms', 
+            title: 'Identify features by clicking',
+            queryVisible: true,
+            eventListeners: {
+                getfeatureinfo: function(event) {
+                    map.addPopup(new OpenLayers.Popup.FramedCloud(
+                        "chicken", 
+                        map.getLonLatFromPixel(event.xy),
+                        null,
+                        event.text,
+                        null,
+                        true
+                    ));
+                }
+            }
+        });
+        map.addControl(info);
+        info.activate(); 
+       */ 
     var geolocate = new OpenLayers.Control.Geolocate({
         id: 'locate-control',
         geolocationOptions: {
@@ -73,13 +94,31 @@ var init = function (onSelectFeatureFunction) {
                 }
             }),
             geolocate,
-            selectControl
+            selectControl,
+            clickinfo
         ],
         layers: [
             new OpenLayers.Layer.OSM("OpenStreetMap", null, {
                 transitionEffect: 'resize'
             }),
             obstructionWms,
+             new OpenLayers.Layer.WMS(
+                    "cite:obstruction - Tiled", "http://localhost:8080/geoserver/cite/wms",
+                    {
+                        LAYERS: 'cite:obstruction',
+                        STYLES: '',
+                        tiled: true,
+                        transparent: true
+                        
+                    },
+                    {
+                        buffer: 0,
+                        displayOutsideMaxExtent: true,
+                        
+                        isBaseLayer: false
+                        
+                    } 
+                ),
             new OpenLayers.Layer.Bing({
                 key: apiKey,
                 type: "Road",
@@ -109,7 +148,7 @@ var init = function (onSelectFeatureFunction) {
         center: new OpenLayers.LonLat(-567207.4520074566,6501824.981972655),
         zoom: 8
     });
-
+	
     var style = {
         fillOpacity: 0.1,
         fillColor: '#000',
